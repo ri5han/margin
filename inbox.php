@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MARGIN | Login - Sign Up</title>
+    <title>MARGIN | Inbox</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -46,71 +46,99 @@
                         style="color: white;">Disabled</a>
                 </li> -->
             </ul>
+            <div class="form-inline my-2 my-lg-0">
+                <a href="#">
+                    <h4 class="mr-sm-2">rishan</h4>
+                </a>
+                <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">LOGOUT</button>
+            </div>
         </div>
     </nav>
     <!-- navigation bar ends here -->
 
-    <br><br>
-    <div class="container">
-        <div class="form-row">
-            <div class="col-md-6">
-                <div style="background-color: #ff9650; padding:10% 10% 33% 10%;">
-                <form>
-                    <h2>Already have an account ?</h2>
-                    <div class="form-group">
-                        <label>Username:</label>
-                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter your username">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                            else.</small>
-                    </div>
-                    <div class="form-group">
-                        <label>Password:</label>
-                        <input type="password" class="form-control" placeholder="Enter your password">
-                    </div>
-                    <!-- <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                    </div> -->
-                    <br>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
-                </div>
-            </div>
 
-            <div class="col-md-6">
-                <div style="background-color: #ff9650; padding:10%;">
-                <form>
-                    <h2>Register for an account</h2>
-                    <div class="form-group">
-                        <label>Username:</label>
-                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter a username">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                            else.</small>
-                    </div>
-                    <div class="form-group">
-                        <label>Email:</label>
-                        <input type=email" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email">
-                        <small id="emailHelp" class="form-text text-muted">This will be your identity for the margin
-                            account.</small>
-                    </div>
-                    <div class="form-group">
-                        <label>Password:</label>
-                        <input type="password" class="form-control" placeholder="Create a password">
-                    </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label">I agree all the terms and conditions.</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Sign Up</button>
-                </form>
-                </div>
-            </div>
-
-        </div>
-
+    <div class="sidenav">
+        <a href="#" class="btn btn-outline-success" data-toggle="modal"
+            data-target="#exampleModal">
+            <h1>COMPOSE</h1>
+    </a>
+        <a href="inbox.php" class="btn btn-outline-primary">
+            <h2>Inbox</h2>
+        </a>
+        <a href="sent.php" class="btn btn-outline-info">
+            <h2>Sent</h2>
+        </a>
+        <a href="bin.php" class="btn btn-outline-danger">
+            <h2>Bin</h2>
+        </a>
     </div>
-    <br><br><br>
 
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff7b23;">
+                    <h5 class="modal-title" id="exampleModalLabel">Compose a mail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color: #fde5d5;">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">To:</label>
+                            <input type="text" class="form-control" id="recipient-name"
+                                placeholder="Username of person you want to send....">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Subject:</label>
+                            <input type="text" class="form-control" id="recipient-name"
+                                placeholder="Mention the subject of the mail....">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea rows="10" class="form-control" id="message-text" placeholder="Start writing your message here...."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" style="background-color: #ff9650;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Discard</button>
+                    <button type="button" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="main">
+        <h1 style="color: #ff6600; font-weight: 900;">INBOX</h1>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">From</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Date</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    
+                        <td>monish</td>
+                    <td><a href="#">New application stats</a></td>
+                    <td>21/6/2019 13:10:34</td>
+                    <td><button type="submit" class="btn btn-danger">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="hr-warning"><br>
+    <h4 style="text-align:center; color: #ff7b23;">Your mail's end here.</h4>
 
 
     <!-- footer bar starts here -->
@@ -141,8 +169,7 @@
             </div>
         </div>
 
-        <div class="footer-copyright text-center py-3" style="background-color: #ff7b23; z-index: 600;">© 2019
-            Copyright:
+        <div class="footer-copyright text-center py-3" style="background-color: #ff7b23; z-index: 600;">© 2019 Copyright:
             <a href="https://mdbootstrap.com/education/bootstrap/"> marginmail.com</a>
         </div>
     </footer> -->

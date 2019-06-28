@@ -17,7 +17,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 
 <body style="background-color: #fde5d5;">
@@ -28,7 +28,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <img src="logo.png" alt="Logo" style="width:35px;">
+            <img src="images/logo.png" alt="Logo" style="width:35px;">
         </a>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <a class="navbar-brand" href="#">
@@ -57,45 +57,19 @@
     </nav>
     <!-- navigation bar ends here -->
 
-
-    <div class="sidenav">
-        <a href="#" class="btn btn-outline-success">
-            <h1>COMPOSE</h1>
+    <div class="welcome">
+    <center>
+        <h1 style="color:#fc6500;">Welcome to MARGIN mail</h1>
+        <br>
+        <h3 style="color:#ff954e;">Hey rishan, I'm glad you are here. We welcome you to our community. Let's get
+            started.
+        </h3>
+        <h3 style="color:#ff954e;">Click below to get started.</h3>
+        <br>
+        <a class="btn btn-info">
+            <h3>Get started</h3>
         </a>
-        <a href="#" class="btn btn-outline-primary">
-            <h2>Inbox</h2>
-        </a>
-        <a href="#" class="btn btn-outline-info">
-            <h2>Sent</h2>
-        </a>
-        <a href="#" class="btn btn-outline-danger">
-            <h2>Bin</h2>
-        </a>
-    </div>
-
-
-    <div class="main">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">From</th>
-                    <th scope="col">Subject</th>
-                    <th scope="col">Date</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    
-                        <td>monish</td>
-                    <td><a href="#">New application stats</a></td>
-                    <td>21/6/2019 13:10:34</td>
-                    <td><button type="submit" class="btn btn-danger">Delete</button></td>
-                </tr>
-            </tbody>
-        </table>
+    </center>
     </div>
 
 
@@ -112,7 +86,7 @@
                     <p>Margin mail a practice project to enhance my skills that I have learnt and apply
                         it using basic web technologies like HTML, CSS, JS, PHP and its relevant libraries
                         as well. Any suggestions are welcomed and you can contact me on my Github handle below
-                        <a href="github.com/ri5han">github.com/ri5han</a>
+                        <a href="www.github.com/ri5han">github.com/ri5han</a>
                     </p>
                 </div>
 
@@ -129,7 +103,8 @@
             </div>
         </div>
 
-        <div class="footer-copyright text-center py-3" style="background-color: #ff7b23; z-index: 600;">© 2019 Copyright:
+        <div class="footer-copyright text-center py-3" style="background-color: #ff7b23; z-index: 600;">© 2019
+            Copyright:
             <a href="https://mdbootstrap.com/education/bootstrap/"> marginmail.com</a>
         </div>
     </footer>
