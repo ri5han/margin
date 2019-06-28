@@ -1,2 +1,2 @@
-# margin
-A mail application using basic web technologies
+# MARGIN mail
+A baic mail application using web technologies
