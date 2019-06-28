@@ -1,2 +1,2 @@
 # MARGIN mail
-A baic mail application using web technologies
+A basic private and enclosed mail application using web technologies
