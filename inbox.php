@@ -154,14 +154,15 @@ if (isset($_POST['send'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php $count=1; foreach($showmail as $sm): ?>
-                <tr>
-                    <th scope="row"><?php echo $count++; ?></th>
-                    <td><?php echo $sm['mfrom']; ?></td>
-                    <td><a href="#"><?php echo $sm['subject']; ?></a></td>
-                    <td><?php echo $sm['time']; ?></td>
-                    <td><a href="inbox.php?mid=<?php echo $sm['mid']; ?>" type="submit" class="btn btn-danger">Delete</a></td>
-                </tr>
+                <?php $count = 1;foreach ($showmail as $sm): ?>
+                    <tr>
+                        <th scope="row"><?php echo $count++; ?></th>
+                        <td><?php echo $sm['mfrom']; ?></td>
+                        <td><a href="#"><?php echo $sm['subject']; ?></a></td>
+                        <td><?php echo $sm['time']; ?></td>
+                        <td><a href="inbox.php?mid=<?php echo $sm['mid']; ?>" type="submit" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                <?php endforeach;?>
             </tbody>
         </table>
     </div>
