@@ -1,3 +1,57 @@
+<?php
+include 'dbconfig.php';
+session_start();
+$loginAlert = $loginAlertClass = $signupAlert = $signupAlertClass = "";
+$count = 0;
+
+if (isset($_POST['signup'])) {
+    $name = $_POST['sname'];
+    $email = $_POST['semail'];
+    $password = $_POST['spassword'];
+
+    $query = "SELECT username FROM users";
+    $result = mysqli_query($conn, $query);
+    $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    //print_r($data);
+    foreach ($data as $i) {
+        //echo $i['username'];
+        if ($i['username'] === $name) {
+            $count = 1;
+            break;
+        }
+    }
+    if ($count == 1) {
+        $signupAlert = "User already exists.";
+        $signupAlertClass = "alert alert-danger";
+
+    } else {
+        $query = "INSERT INTO users(username,email,password) VALUES('$name','$email','$password')";
+        mysqli_query($conn, $query);
+        $_SESSION['username'] = $name;
+        header('Location: welcome.php');
+
+    }
+}
+
+if (isset($_POST['login'])) {
+    $name = $_POST['lname'];
+    $password = $_POST['lpassword'];
+
+    $query = "SELECT password FROM users WHERE username='$name'";
+    $result = mysqli_query($conn, $query);
+    $user = mysqli_fetch_assoc($result);
+
+    if ($user['password'] == $password) {
+        $_SESSION['username'] = $name;
+        header('Location: inbox.php');
+    } else {
+        $alert = "Wrong Username or Password.";
+        $alertClass = "alert alert-danger";
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,53 +109,53 @@
         <div class="form-row">
             <div class="col-md-6">
                 <div style="background-color: #ff9650; padding:10% 10% 33% 10%;">
-                <form>
+                <form method="POST" action="home.php">
                     <h2>Already have an account ?</h2>
+                    <div class="<?php echo $loginAlertClass; ?>"><?php echo $loginAlert; ?></div>
                     <div class="form-group">
                         <label>Username:</label>
-                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter your username">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                            else.</small>
+                        <input type="text" name="lname" class="form-control" aria-describedby="emailHelp" placeholder="Enter your username" required>
                     </div>
                     <div class="form-group">
                         <label>Password:</label>
-                        <input type="password" class="form-control" placeholder="Enter your password">
+                        <input type="password" name="lpassword" class="form-control" placeholder="Enter your password" required>
                     </div>
                     <!-- <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
                     </div> -->
                     <br>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" name="login" class="btn btn-primary">Login</button>
                 </form>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div style="background-color: #ff9650; padding:10%;">
-                <form>
+                <form method="POST" action="home.php">
                     <h2>Register for an account</h2>
+                    <div class="<?php echo $signupAlertClass; ?>"><?php echo $signupAlert; ?></div>
                     <div class="form-group">
                         <label>Username:</label>
-                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter a username">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                            else.</small>
-                    </div>
-                    <div class="form-group">
-                        <label>Email:</label>
-                        <input type=email" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email">
+                        <input type="text" name="sname" class="form-control" aria-describedby="emailHelp" placeholder="Enter a username" required>
                         <small id="emailHelp" class="form-text text-muted">This will be your identity for the margin
                             account.</small>
                     </div>
                     <div class="form-group">
+                        <label>Email:</label>
+                        <input type=email" name="semail" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email (Optional)">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                            else.</small>
+                    </div>
+                    <div class="form-group">
                         <label>Password:</label>
-                        <input type="password" class="form-control" placeholder="Create a password">
+                        <input type="password" name="spassword" class="form-control" placeholder="Create a password" required>
                     </div>
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
                         <label class="form-check-label">I agree all the terms and conditions.</label>
                     </div>
-                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                    <button type="submit" name="signup" class="btn btn-primary">Sign Up</button>
                 </form>
                 </div>
             </div>

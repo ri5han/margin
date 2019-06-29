@@ -1,3 +1,19 @@
+<?php
+    include 'dbconfig.php';
+    session_start();
+
+    if(isset($_POST['logout'])) {
+        unset($_SESSION);
+        session_destroy();
+        header('Location: logout.php');
+    }
+
+    $query="SELECT uid FROM users WHERE username='{$_SESSION['username']}'";
+    $result=mysqli_query($conn,$query);
+    $uid=mysqli_fetch_assoc($result);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,10 +64,10 @@
             </ul>
             <div class="form-inline my-2 my-lg-0">
                 <a href="#">
-                    <h4 class="mr-sm-2">rishan</h4>
+                    <h4 class="mr-sm-2"><?php echo $_SESSION['username']; ?></h4>
                 </a>
                 <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-                <button class="btn btn-danger my-2 my-sm-0" type="submit">LOGOUT</button>
+                <button class="btn btn-danger my-2 my-sm-0" type="submit" name="logout">LOGOUT</button>
             </div>
         </div>
     </nav>
@@ -66,7 +82,7 @@
         </h3>
         <h3 style="color:#ff954e;">Click below to get started.</h3>
         <br>
-        <a class="btn btn-info">
+        <a href="inbox.php" class="btn btn-info">
             <h3>Get started</h3>
         </a>
     </center>
