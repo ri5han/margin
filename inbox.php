@@ -1,8 +1,11 @@
 <?php
 include 'dbconfig.php';
 session_start();
+echo $_SESSION['username'];
+$mid=0;
+$bin = 0;
 
-$showmailquery = "SELECT * FROM mails WHERE mto='{$_SESSION['username']}'";
+$showmailquery = "SELECT * FROM mails WHERE mto='{$_SESSION['username']}' AND bin='{$bin}'";
 $showmailresult = mysqli_query($conn, $showmailquery);
 $showmail = mysqli_fetch_all($showmailresult, MYSQLI_ASSOC);
 
@@ -16,11 +19,19 @@ if (isset($_POST['send'])) {
     $mto = $_POST['mto'];
     $subject = $_POST['subject'];
     $message = $_POST['message'];
-    $sent = 1;
+    // $sent = 1;
 
-    $query = "INSERT INTO mails(mfrom,mto,subject,message,sent) VALUES('{$_SESSION['username']}','$mto','$subject','$message','$sent')";
+    $query = "INSERT INTO mails(mfrom,mto,subject,message) VALUES('{$_SESSION['username']}','$mto','$subject','$message')";
     mysqli_query($conn, $query);
     echo "sent";
+}
+
+if(isset($_POST['delete'])) {
+    $mid = $_GET['mid'];
+    $bin=1;
+    $deletemail="UPDATE mails SET bin='{$bin}' WHERE mid='{$mid}'";
+    mysqli_query($conn,$deletemail);
+    header('Location: inbox.php');
 }
 
 ?>
@@ -75,7 +86,7 @@ if (isset($_POST['send'])) {
             </ul>
             <div class="form-inline my-2 my-lg-0">
                 <a href="#">
-                    <h4 class="mr-sm-2">rishan</h4>
+                    <h4 class="mr-sm-2"><?php echo $_SESSION['username']; ?></h4>
                 </a>
                 <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
                 <form method="POST" action="inbox.php">
@@ -158,9 +169,9 @@ if (isset($_POST['send'])) {
                     <tr>
                         <th scope="row"><?php echo $count++; ?></th>
                         <td><?php echo $sm['mfrom']; ?></td>
-                        <td><a href="#"><?php echo $sm['subject']; ?></a></td>
+                        <td><a href="mail.php?mid=<?php echo $sm['mid']; ?>"><?php echo $sm['subject']; ?></a></td>
                         <td><?php echo $sm['time']; ?></td>
-                        <td><a href="inbox.php?mid=<?php echo $sm['mid']; ?>" type="submit" class="btn btn-danger">Delete</a></td>
+                        <td><form method="POST" action="inbox.php?mid=<?php echo $sm['mid']; ?>"><input name="delete" type="submit" class="btn btn-danger" value="Bin"></form></td>
                     </tr>
                 <?php endforeach;?>
             </tbody>
@@ -168,7 +179,7 @@ if (isset($_POST['send'])) {
     </div>
 
     <hr class="hr-warning"><br>
-    <h4 style="text-align:center; color: #ff7b23;">Your mail's end here.</h4>
+    <h4 style="text-align:center; color: #ff7b23;">Your recieved mail's end here.</h4>
 
 
     <!-- footer bar starts here -->

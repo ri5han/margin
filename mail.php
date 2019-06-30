@@ -1,3 +1,39 @@
+<?php
+include 'dbconfig.php';
+session_start();
+echo $_SESSION['username'];
+$bin=0;
+$mid=$_GET['mid'];
+
+$showmailquery = "SELECT * FROM mails WHERE mto='{$_SESSION['username']}' AND bin='{$bin}'";
+$showmailresult = mysqli_query($conn, $showmailquery);
+$showmail = mysqli_fetch_all($showmailresult, MYSQLI_ASSOC);
+
+if (isset($_POST['logout'])) {
+    unset($_SESSION);
+    session_destroy();
+    header('Location: logout.php');
+}
+
+if (isset($_POST['send'])) {
+    $mto = $_POST['mto'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
+    // $sent = 1;
+
+    $query = "INSERT INTO mails(mfrom,mto,subject,message) VALUES('{$_SESSION['username']}','$mto','$subject','$message')";
+    mysqli_query($conn, $query);
+    echo "sent";
+}
+
+if (isset($_POST['delete'])) {
+    $bin = 1;
+    $deletemail = "UPDATE mails SET bin='{$bin}' WHERE mid='{$mid}'";
+    mysqli_query($conn, $deletemail);
+    header('Location: inbox.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,10 +84,12 @@
             </ul>
             <div class="form-inline my-2 my-lg-0">
                 <a href="#">
-                    <h4 class="mr-sm-2">rishan</h4>
+                    <h4 class="mr-sm-2"><?php echo $_SESSION['username']; ?></h4>
                 </a>
                 <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-                <button class="btn btn-danger my-2 my-sm-0" type="submit">LOGOUT</button>
+                <form method="POST" action="mail.php">
+                    <button name="logout" class="btn btn-danger my-2 my-sm-0" type="submit">LOGOUT</button>
+                </form>
             </div>
         </div>
     </nav>
@@ -76,21 +114,19 @@
     <div class="main container">
             <div class="row" style="margin-top:1%;">
                 <h3><a style="text-decoration: none;" href="inbox.php" class="btn btn-info">BACK</a></h3>
-                <h3><a style="text-decoration: none;" href="#" class="btn btn-danger">DELETE</a></h3>
+                <h3><form method="POST" action="mail.php?mid=<?php echo $mid; ?>"><input name="delete" type="submit" class="btn btn-danger" value="BIN"></form></h3>
             </div>
             <div style="background-color: #ff8965; padding:1%;margin-top:1%;">
-                <h2 style="color: #ffffff;text-align: center;">New application stats</h2>
+                <h2 style="color: #ffffff;text-align: center;"><?php echo $showmail[0]['subject']; ?></h2>
             </div>
             <div style="background-color: #ff8965; padding:1%;margin-top:1%;">
             <h3 style="color: #ffe2da;">FROM: &nbsp;</h3>
-            <h5>test@test.com</h5>
+            <h5><?php echo $showmail[0]['mfrom']; ?></h5>
             </div>
             <br>
             <div style="background-color: #f8b8a5; padding:1%;">
             <h3 style="color: #ffffff;">MESSAGE: &nbsp;</h3>
-            <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis omnis asperiores in molestiae nemo, iure, cumque 
-                ex voluptatibus doloremque laborum quas reprehenderit laboriosam numquam officia. Corrupti, ea. Explicabo quaerat harum possimus 
-                at consequuntur! Iure nulla libero consectetur a illo quam? Debitis tenetur ex dicta deserunt error laudantium corporis in unde.</h5>
+            <h5><?php echo $showmail[0]['message']; ?></h5>
             </div>
     </div>
 

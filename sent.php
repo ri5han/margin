@@ -1,3 +1,41 @@
+<?php
+include 'dbconfig.php';
+session_start();
+echo $_SESSION['username'];
+$mid = 0;
+$bin = 0;
+
+$showmailquery = "SELECT * FROM mails WHERE mfrom='{$_SESSION['username']}' AND bin='{$bin}'";
+$showmailresult = mysqli_query($conn, $showmailquery);
+$showmail = mysqli_fetch_all($showmailresult, MYSQLI_ASSOC);
+
+if (isset($_POST['logout'])) {
+    unset($_SESSION);
+    session_destroy();
+    header('Location: logout.php');
+}
+
+if (isset($_POST['send'])) {
+    $mto = $_POST['mto'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
+    // $sent = 1;
+
+    $query = "INSERT INTO mails(mfrom,mto,subject,message) VALUES('{$_SESSION['username']}','$mto','$subject','$message')";
+    mysqli_query($conn, $query);
+    echo "sent";
+}
+
+if (isset($_POST['delete'])) {
+    $mid = $_GET['mid'];
+    $bin = 1;
+    $deletemail = "UPDATE mails SET bin='{$bin}' WHERE mid='{$mid}'";
+    mysqli_query($conn, $deletemail);
+    header('Location: sent.php');
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,7 +89,9 @@
                     <h4 class="mr-sm-2">rishan</h4>
                 </a>
                 <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-                <button class="btn btn-danger my-2 my-sm-0" type="submit">LOGOUT</button>
+                <form method="POST" action="sent.php">
+                    <button name="logout" class="btn btn-danger my-2 my-sm-0" type="submit">LOGOUT</button>
+                </form>
             </div>
         </div>
     </nav>
@@ -86,26 +126,26 @@
                     </button>
                 </div>
                 <div class="modal-body" style="background-color: #fde5d5;">
-                    <form>
+                    <form method="POST" action="inbox.php">
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">To:</label>
-                            <input type="text" class="form-control" id="recipient-name"
+                            <input name="mto" type="text" class="form-control" id="recipient-name"
                                 placeholder="Username of person you want to send....">
                         </div>
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">Subject:</label>
-                            <input type="text" class="form-control" id="recipient-name"
+                            <input name="subject" type="text" class="form-control" id="recipient-name"
                                 placeholder="Mention the subject of the mail....">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea rows="10" class="form-control" id="message-text" placeholder="Start writing your message here...."></textarea>
+                            <textarea name="message" rows="10" class="form-control" id="message-text" placeholder="Start writing your message here...."></textarea>
+                        </div>
+                        <div class="modal-footer" style="background-color: #ff9650;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Discard</button>
+                            <button name="send" type="submit" class="btn btn-primary">Send</button>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer" style="background-color: #ff9650;">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Discard</button>
-                    <button type="button" class="btn btn-primary">Send</button>
                 </div>
             </div>
         </div>
@@ -118,27 +158,28 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">From</th>
+                    <th scope="col">To</th>
                     <th scope="col">Subject</th>
                     <th scope="col">Date</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    
-                        <td>monish</td>
-                    <td><a href="#">New application stats</a></td>
-                    <td>21/6/2019 13:10:34</td>
-                    <td><button type="submit" class="btn btn-danger">Delete</button></td>
-                </tr>
+                <?php $count = 1;foreach ($showmail as $sm): ?>
+                    <tr>
+                        <th scope="row"><?php echo $count++; ?></th>
+                        <td><?php echo $sm['mfrom']; ?></td>
+                        <td><a href="#"><?php echo $sm['subject']; ?></a></td>
+                        <td><?php echo $sm['time']; ?></td>
+                        <td><form method="POST" action="sent.php?mid=<?php echo $sm['mid']; ?>"><input name="delete" type="submit" class="btn btn-danger" value="Bin"></form></td>
+                    </tr>
+                <?php endforeach;?>
             </tbody>
         </table>
     </div>
 
     <hr class="hr-warning"><br>
-    <h4 style="text-align:center; color: #ff7b23;">Your mail's end here.</h4>
+    <h4 style="text-align:center; color: #ff7b23;">Your sent mail's end here.</h4>
 
 
     <!-- footer bar starts here -->
