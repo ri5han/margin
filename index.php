@@ -109,7 +109,7 @@ if (isset($_POST['login'])) {
         <div class="form-row">
             <div class="col-md-6">
                 <div style="background-color: #ff9650; padding:10% 10% 33% 10%;">
-                <form method="POST" action="home.php">
+                <form method="POST" action="index.php">
                     <h2>Already have an account ?</h2>
                     <div class="<?php echo $loginAlertClass; ?>"><?php echo $loginAlert; ?></div>
                     <div class="form-group">
@@ -132,7 +132,7 @@ if (isset($_POST['login'])) {
 
             <div class="col-md-6">
                 <div style="background-color: #ff9650; padding:10%;">
-                <form method="POST" action="home.php">
+                <form method="POST" action="index.php">
                     <h2>Register for an account</h2>
                     <div class="<?php echo $signupAlertClass; ?>"><?php echo $signupAlert; ?></div>
                     <div class="form-group">

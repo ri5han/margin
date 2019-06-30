@@ -59,7 +59,7 @@
         </h3>
         <h3 style="color:#ff954e;">Click below to get started.</h3>
         <br>
-        <a href="home.php" class="btn btn-info">
+        <a href="index.php" class="btn btn-info">
             <h3>Login/Sign Up</h3>
         </a>
     </center>

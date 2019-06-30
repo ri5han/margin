@@ -21,9 +21,30 @@ if (isset($_POST['send'])) {
     $message = $_POST['message'];
     // $sent = 1;
 
-    $query = "INSERT INTO mails(mfrom,mto,subject,message) VALUES('{$_SESSION['username']}','$mto','$subject','$message')";
-    mysqli_query($conn, $query);
-    echo "sent";
+    if (strpos($mto, '@') !== false) {
+        $toEmail = $mto;
+		$sub = $subject;
+		$body = $message;
+				// Email Headers
+		$headers = "MIME-Version: 1.0" ."\r\n";
+		$headers .="Content-Type:text/html;charset=UTF-8" . "\r\n";
+				// Additional Headers
+		$headers .= "From: ".$_SESSION['username']." <".$_SESSION['username']."@margin.com>". "\r\n";
+		if(mail($toEmail, $sub, $body, $headers)){
+                    // Email Sent
+            $query = "INSERT INTO mails(mfrom,mto,subject,message) VALUES('{$_SESSION['username']}','$toEmail','$sub','$body')";
+            mysqli_query($conn, $query);
+            echo "sent via outside";	
+		} else {
+					// Failed
+			echo "failed";
+		}
+
+    } else {
+        $query = "INSERT INTO mails(mfrom,mto,subject,message) VALUES('{$_SESSION['username']}','$mto','$subject','$message')";
+        mysqli_query($conn, $query);
+        echo "sent via inside";
+    }
 }
 
 if(isset($_POST['delete'])) {
